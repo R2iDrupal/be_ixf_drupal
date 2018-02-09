@@ -80,7 +80,7 @@ class RedirectHTTPHeaders implements EventSubscriberInterface {
 
     if (isset($redirect_code) && isset($redirect_location)) {
       $response->setStatusCode($redirect_code);
-//      $response->headers->set("Location", $redirect_location);
+      $response->headers->set("Location", $redirect_location);
     }
 
   }
