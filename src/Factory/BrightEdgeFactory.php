@@ -25,7 +25,7 @@ class BrightEdgeIXFPHPClient {
     } else {
       // keep only 1 for now
 //      echo "SYU url=$url, old key size=" . count($this->sdk_client_array) . "<BR>\n";
-      $this->sdk_client_array = array();
+      self::$sdk_client_array = array();
       $be_ixf_client = new BEIXFClient($this->sdk_config);
       self::$sdk_client_array[$url] = $be_ixf_client;
 //      echo "SYU self=" . spl_object_hash($this) . ", pid=" . getmypid() . ", date=" . date(DATE_RFC2822) . ", url=$url, returning new object=" . spl_object_hash($be_ixf_client) . "<BR>\n";

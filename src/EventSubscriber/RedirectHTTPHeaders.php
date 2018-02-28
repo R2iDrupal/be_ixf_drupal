@@ -75,7 +75,9 @@ class RedirectHTTPHeaders implements EventSubscriberInterface {
 //echo "SYU set cid $cid\n";
 //var_dump($data);
 
-      \Drupal::cache()->set($cid, $data, $expire_time);
+      if (isset($data)) {
+        \Drupal::cache()->set($cid, $data, $expire_time);
+      }
     }
 
     if (isset($redirect_code) && isset($redirect_location)) {
