@@ -30,6 +30,7 @@ class BrightEdgeIXFPHPClient {
       self::$sdk_client_array[$url] = $be_ixf_client;
 //      echo "SYU self=" . spl_object_hash($this) . ", pid=" . getmypid() . ", date=" . date(DATE_RFC2822) . ", url=$url, returning new object=" . spl_object_hash($be_ixf_client) . "<BR>\n";
     }
+//    echo "SYU capsule_URL " . $be_ixf_client->getCapsuleAPIURL() . ", pid=" . getmypid() . ", date=" . date(DATE_RFC2822) . "<BR>\n";
     return $be_ixf_client;
   }
 }

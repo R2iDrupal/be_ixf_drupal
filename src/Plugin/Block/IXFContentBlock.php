@@ -136,14 +136,17 @@ class IXFContentBlock extends BlockBase implements BlockPluginInterface {
   }
 
   public function getCacheTags() {
+    // @see https://www.drupal.org/docs/8/api/cache-api/cache-tags
     // With this when your node change your block will rebuild
     if ($node = \Drupal::routeMatch()->getParameter('node')) {
       // if there is node add its cachetag
       $config = $this->getConfiguration();
       $node_type = $config['type'];
       $node_feature_group = $config['feature_group'];
-      return Cache::mergeTags(parent::getCacheTags(), array('node:' . $node->id(),
-          'custom_be:' . $node_type . "_" . $node_feature_group));
+      $cache_tags = Cache::mergeTags(parent::getCacheTags(), array('node:' . $node->id(),
+          'custom_be:' . $node->id() . "_" . $node_type . "_" . $node_feature_group));
+//      echo "SYU Cache_tags = " . print_r($cache_tags, true) . "<br />";
+      return $cache_tags;
     } else {
       // Return default tags instead.
       return parent::getCacheTags();
@@ -151,10 +154,16 @@ class IXFContentBlock extends BlockBase implements BlockPluginInterface {
   }
 
   public function getCacheContexts() {
+    // @see https://www.drupal.org/developing/api/8/cache/contexts
     // if you depends on \Drupal::routeMatch()
     // you must set context of this block with 'route' context tag.
     // Every new route this block will rebuild
-    return Cache::mergeContexts(parent::getCacheContexts(), array('route', 'url.query_args:ixf_debug'));
+//    return Cache::mergeContexts(parent::getCacheContexts(), array('route', 'url.query_args:ixf_debug'));
+//    $cache_context = Cache::mergeContexts(parent::getCacheContexts(), array('route', 'url.query_args:ixf_debug'));
+//    $cache_context = Cache::mergeContexts(parent::getCacheContexts(), array('route', 'url.query_args'));
+    $cache_context = Cache::mergeContexts(parent::getCacheContexts(), array('url.path', 'url.query_args'));
+//    echo "SYU Cache_context = " . print_r($cache_context, true) . "<br />";
+    return $cache_context;
   }
 
   public function getCacheMaxAge() {
@@ -166,7 +175,8 @@ class IXFContentBlock extends BlockBase implements BlockPluginInterface {
     if ($module_config->get('block_cache_max_age') != null) {
       $cache_age = intval($module_config->get('block_cache_max_age'));
     }
-//    $cache_age = 120;
+    $cache_age = 120;
+//    $cache_age = 30;
     return $cache_age;
   }
 
